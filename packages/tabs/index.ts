@@ -155,9 +155,14 @@ VantComponent({
     // correct the index of active tab
     setCurrentIndexByName(name) {
       const { children = [] } = this;
-      const matched = children.filter(
-        (child: TrivialInstance) => child.getComputedName() === name
-      );
+      const matched = children.filter((child: TrivialInstance) => {
+        const computedName =
+          child.getComputedName() !== null
+            ? child.getComputedName().toString()
+            : '';
+        const paramName = name !== null ? name.toString() : '';
+        return computedName === paramName;
+      });
 
       if (matched.length) {
         this.setCurrentIndex(matched[0].index);
